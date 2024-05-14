@@ -627,7 +627,9 @@ class Jupiter():
             quote_url += "&maxAccounts=" + str(max_accounts)
         if platform_fee_bps:
             quote_url += "&plateformFeeBps=" + platform_fee_bps
-        
+         if fee_account:
+            quote_url += "&feeAccount=" + fee_account
+             
         quote_response = httpx.get(url=quote_url).json()
         try:
             quote_response['routePlan']
@@ -649,7 +651,8 @@ class Jupiter():
         as_legacy_transaction: bool=False,
         exclude_dexes: list=None,
         max_accounts: int=None,
-        platform_fee_bps: int=None
+        platform_fee_bps: int=None,
+        fee_account: str=None
     ) -> str:
         """Perform a swap.
         
@@ -668,6 +671,7 @@ class Jupiter():
                 ``exclude_dexes (list)``: Default is that all DEXes are included. You can pass in the DEXes that you want to exclude in a list. For example, ['Aldrin','Saber'].\n
                 ``max_accounts (int)``: Find a route given a maximum number of accounts involved, this might dangerously limit routing ending up giving a bad price. The max is an estimation and not the exact count.\n
                 ``platform_fee_bps (int)``: If you want to charge the user a fee, you can specify the fee in BPS. Fee % is taken out of the output token.
+                ``fee_account (str)``: le key du partenariat jupi.
         
         Returns:
             ``str``: returns serialized transactions to perform the swap from https://quote-api.jup.ag/v6/swap
@@ -696,7 +700,8 @@ class Jupiter():
             as_legacy_transaction=as_legacy_transaction,
             exclude_dexes=exclude_dexes,
             max_accounts=max_accounts,
-            platform_fee_bps=platform_fee_bps
+            platform_fee_bps=platform_fee_bps,
+            fee_account=fee_account
             )
         transaction_parameters = {
             "quoteResponse": quoteResponse,
