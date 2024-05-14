@@ -627,7 +627,7 @@ class Jupiter():
             quote_url += "&maxAccounts=" + str(max_accounts)
         if platform_fee_bps:
             quote_url += "&plateformFeeBps=" + platform_fee_bps
-         if fee_account:
+        if fee_account:
             quote_url += "&feeAccount=" + fee_account
              
         quote_response = httpx.get(url=quote_url).json()
